@@ -1,4 +1,5 @@
 require("dotenv").config();
+var {ObjectId} = require('mongodb');
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -25,16 +26,18 @@ var user = mongoose.model("user", userScheme);
 //product table
 const productScheme = new Schema({
   name: String,
-  price: Int16Array,
+  price: Number,
   description: String,
+  image:String,
   datePosted: Date,
+  category: ObjectId
 });
 var product = mongoose.model("product", productScheme);
 
 //product user table
 const productUserScheme = new Schema({
-  idUser: ObjectID,
-  idProduct: ObjectID,
+  idUser: ObjectId,
+  idProduct: ObjectId,
 });
 var produtUser = mongoose.model("productUser", productUserScheme);
 

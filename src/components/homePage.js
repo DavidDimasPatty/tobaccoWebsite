@@ -1,16 +1,17 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
-const homePage = () => {
-
+const HomePage = () => {
 
 
 
-    
+
+
   return (
-    <div>homePage</div>
+    <div>
+    <h1>tes</h1>
+    </div>
   )
 }
 
 
-export default homePage
+export default HomePage
