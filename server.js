@@ -10,7 +10,23 @@ app.use(bodyParser.urlencoded({extended:true}))
 require('dotenv').config();
 dbm.connect()
 
+app.get('/api/user',function(req,res){
+    dbm.getIdUser(req.query.idUser,req.query.password).then((result)=>{
+        res.send(result)
+    })
+})
 
+app.get('/api/getAllProducts',function(req,res){
+    dbm.getAllProduct().then((result)=>{
+        res.send(result)
+    })
+})
+
+app.post('/api/addUserProduct',function(req,res){
+    dbm.addUserProduct(req.body,idUser,req.body.idProduct).then((result)=>{
+        res.send(result);
+    })
+})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT,()=>console.log(`Server running on ${PORT}`))
