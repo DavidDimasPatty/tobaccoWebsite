@@ -28,7 +28,7 @@ const productScheme = new Schema({
   name: String,
   price: Number,
   description: String,
-  image:String,
+  image:Array,
   datePosted: Date,
   category: ObjectId
 });
