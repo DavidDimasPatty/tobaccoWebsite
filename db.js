@@ -55,6 +55,26 @@ async function getAllProduct() {
   return arr;
 }
 
+async function getProduct(id){
+  var arr=[];
+  await product.find({"_id":id}).then((res)=>{
+    arr=res;
+  }).catch((e)=>{
+    console.log(e);
+  })
+  return arr;
+}
+
+async function getCategoriesProduct(id){
+  var arr=[];
+  await product.find({"category":id}).then((res)=>{
+    arr=res;
+  }).catch((e)=>{
+    console.log(e);
+  })
+  return arr;
+}
+
 async function getIdUser(id, password) {
   var arr = [];
   await user.find({ $and: [{ _id: id }, { password: password }] }).then((res)=>{
@@ -84,5 +104,7 @@ module.exports={
     connect:connect,
     getIdUser:getIdUser,
     getAllProduct:getAllProduct,
-    addUserProduct:addUserProduct
+    addUserProduct:addUserProduct,
+    getProduct:getProduct,
+    getCategoriesProduct:getCategoriesProduct
 }

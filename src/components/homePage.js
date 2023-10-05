@@ -229,13 +229,12 @@ const HomePage = () => {
           <center>
             <h2>Words from our customers</h2>
             <Carousel data-bs-theme="dark xs">
-              {() => {}}
               {(() => {
                 var arr = [
                   "The best quality services",
                   "Easy to order",
                   "Best innovation to ordering ciggars",
-                  "Fast ordered from oversea",
+                  "Fast order from overseas",
                 ];
                 const arr2 = [];
                 for (var i = 0; i < arr.length; i++) {
