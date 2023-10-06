@@ -8,9 +8,11 @@ import { Form, InputGroup } from "react-bootstrap";
 import Column from "react-bootstrap/Col";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaStar, FaArrowRight } from "react-icons/fa";
+import "../assets/style/detailProduct.css";
 const DetailProduct = () => {
   const { id } = useParams();
   const [dataProduct, setDataProduct] = useState([]);
+  const [value, setValue] = useState(0);
   const [dataProductCategories, setDataProductCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,30 +20,10 @@ const DetailProduct = () => {
   const { REACT_APP_DEV_URL, REACT_APP_DEV_PRODUCTION } = process.env;
 
   useEffect(() => {
-    getDataProduct();
+    getDataProductCategories();
   }, []);
 
-  const getDataProduct = async () => {
-    await axios
-      .get(
-        `${
-          devEnv
-            ? process.env.REACT_APP_DEV_URL
-            : process.env.REACT_APP_DEV_PRODUCTION
-        }/getProduct`,
-        {
-          params: {
-            id: id,
-          },
-        }
-      )
-      .then((res) => {
-        setDataProduct(res.data);
-        getDataProductCategories(res.data[0].category);
-      });
-  };
-
-  const getDataProductCategories = async (idCategory) => {
+  const getDataProductCategories = async () => {
     await axios
       .get(
         `${
@@ -51,17 +33,19 @@ const DetailProduct = () => {
         }/getProductCategories`,
         {
           params: {
-            idCategory: idCategory,
+            id: id,
           },
         }
       )
       .then((res) => {
-        setDataProductCategories(res);
+        console.log(res.data[1][0]);
+        setDataProduct(res.data[0]);
+        setDataProductCategories(res.data[1]);
         setIsLoading(false);
       });
   };
 
-  if (isLoading) {
+  if (isLoading == true) {
     return <div>Loading....</div>;
   }
 
@@ -81,7 +65,7 @@ const DetailProduct = () => {
                         src={dataProduct[0].image[i]}
                         style={{
                           "max-width": "500px",
-                          height: "500px",
+                          "max-height": "500px",
                           display: "flex",
                           margin: "0 auto",
                           "justify-content": "center",
@@ -116,9 +100,29 @@ const DetailProduct = () => {
             <center>
               <Form.Group>
                 <Form.Label>Quantity</Form.Label>
-                <InputGroup style={{ width: "10%" }}>
-                  <InputGroup.Text id="inputGroupPrepend">+</InputGroup.Text>
-                  <Form.Control type="number" value={0} />
+                <InputGroup style={{ width: "15%" }}>
+                  <InputGroup.Text
+                    id="inputGroupPrepend"
+                    onClick={() => {
+                      setValue(value + 1);
+                    }}
+                  >
+                    +
+                  </InputGroup.Text>
+                  <Form.Control
+                    type="number"
+                    min={0}
+                    defaultValue={0}
+                    value={value}
+                  />
+                  <InputGroup.Text
+                    id="inputGroupPrepend"
+                    onClick={() => {
+                      value > 0 ? setValue(value - 1) : setValue(value);
+                    }}
+                  >
+                    -
+                  </InputGroup.Text>
                 </InputGroup>
               </Form.Group>
             </center>
@@ -131,6 +135,40 @@ const DetailProduct = () => {
             </center>
           </Row>
         </Column>
+      </Row>
+      <Row>
+        <Row className="ms-3 mt-5">
+          {" "}
+          <h3>Another Products you may like:</h3>
+        </Row>
+        <Row className="ms-3 mt-5">
+          {(() => {
+            var arr = [];
+            for (var i = 0; i < dataProductCategories.length; i++) {
+              arr.push(
+                <Card style={{ width: "20rem" }} className="ms-4">
+                  <Card.Img
+                    variant="top"
+                    src={dataProductCategories[i].image[1]}
+                    style={{
+                      "max-width": "200px",
+                      height: "200px",
+                      display: "flex",
+                      margin: "0 auto",
+                      "justify-content": "center",
+                    }}
+                  />
+                  <Card.Body>
+                    <center>
+                      <h4>{dataProductCategories[i].name}</h4>
+                    </center>
+                  </Card.Body>
+                </Card>
+              );
+            }
+            return arr;
+          })()}
+        </Row>
       </Row>
       <Footer />
     </>

@@ -22,16 +22,17 @@ app.get("/api/getAllProducts", function (req, res) {
   });
 });
 
-app.get("/api/getProduct", function (req, res) {
-  dbm.getProduct(req.query.id).then((result) => {
-    res.send(result);
-  });
-});
+// app.get("/api/getProduct", function (req, res) {
+//   dbm.getProduct(req.query.id).then((result) => {
+//     res.send(result);
+//   });
+// });
 
-app.get("/api/getProductCategories", function (req,res) {
-    dbm.getCategoriesProduct(req.query.idCategory).then((result)=>{
-        res.send(result);
-    })
+app.get("/api/getProductCategories", async function (req,res) {
+    await dbm.getProduct(req.query.id).then(async (ressdata)=>{
+        var res2= await dbm.getCategoriesProduct(ressdata[0].category);
+        res.send([ressdata,res2])
+    });
 })
 
 app.get("/api/getAllProducts", function (req, res) {

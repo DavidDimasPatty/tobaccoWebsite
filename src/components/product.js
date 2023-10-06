@@ -52,6 +52,20 @@ const Product=()=>{
         }
 
     }
+
+    async function sortByCategories(cat){
+   
+          var dataProductTemp2=[];
+          for(var i=0;i<dataProductTemp.length;i++){
+              if(String(dataProductTemp[i].category)==cat){
+                  console.log(dataProductTemp[i].name);
+                  dataProductTemp2.push(dataProductTemp[i]);
+              }
+          }
+          setDataProduct(dataProductTemp2);
+      
+
+  }
     
     if (isLoading) {
       return <div className="App">Loading...</div>;
@@ -66,6 +80,11 @@ const Product=()=>{
         <Form.Control type="text" onChange={(e)=>sortArr(e.target.value)} placeholder="Find your product"/>
         <InputGroup.Text><FaSearch/></InputGroup.Text>
         </InputGroup>
+        <center className="mt-3">
+        <Button variant="dark" onClick={()=>{sortByCategories("651bc0f677b0928646c9e42b")}} >Large Cigar</Button>
+        <Button variant="dark" onClick={()=>{sortByCategories("651bc11377b0928646c9e42c")}} className="ms-3">Cigarillo</Button>
+        <Button variant="dark" onClick={()=>{sortByCategories("651bc12777b0928646c9e42d")}} className="ms-3">Little Cigar</Button>
+        </center>
             <Row>
                 {dataProduct.map((data,index)=>(
                     <Column>
