@@ -1,0 +1,82 @@
+.box {
+    width:100%;
+    object-fit: cover;
+    -webkit-mask:
+      radial-gradient(var(--r1,160%) var(--r2,68.15%) at top   ,white 79.5%,transparent 80%) top left,
+      radial-gradient(var(--r1,160%) var(--r2,68.15%) at bottom,transparent 79.5%,white 80%) top center,
+      radial-gradient(var(--r1,160%) var(--r2,68.15%) at top   ,white 79.5%,transparent 80%) top right;
+    mask:
+      radial-gradient(var(--r1,160%) var(--r2,68.15%) at top   ,white 79.5%,transparent 80%) top left,
+      radial-gradient(var(--r1,160%) var(--r2,68.15%) at bottom,transparent 79.5%,white 80%) top center,
+      radial-gradient(var(--r1,160%) var(--r2,68.15%) at top   ,white 79.5%,transparent 80%) top right;
+    -webkit-mask-size:33.4% 120%; 
+    -webkit-mask-repeat:no-repeat;
+    mask-size:33.4% 120%;
+    mask-repeat:no-repeat;
+  }
+
+  .timeline{
+    width:800px;
+    background-color:#F1EFEF;
+    color:#000;
+    padding:30px;
+    box-shadow:0px 0px 10px rgba(0,0,0,.5);
+  }
+  .timeline ul{
+    list-style-type:none;
+    border-left:2px solid #094a68;
+    padding:10px 5px;
+  }
+  .timeline ul li{
+    padding:20px 20px;
+    position:relative;
+    cursor:pointer;
+    transition:.5s;
+  }
+  .timeline ul li span{
+    display:inline-block;
+    color: black;
+    font-weight: 800;
+    border-radius:25px;
+    padding:2px 5px;
+    font-size:15px;
+    text-align:center;
+  }
+  .timeline ul li .content h3{
+    color:#7D7C7C;
+    font-size:17px;
+    padding-top:5px;
+  }
+  .timeline ul li .content p{
+    padding:5px 0px 15px 0px;
+    font-size:15px;
+  }
+  .timeline ul li:before{
+    position:absolute;
+    content:'';
+    width:10px;
+    height:10px;
+    background-color:#34ace0;
+    border-radius:50%;
+    left:-11px;
+    top:28px;
+    transition:.5s;
+  }
+  .timeline ul li:hover{
+    background-color:#CCC8AA;
+  }
+  .timeline ul li:hover:before{
+    background-color:#094a68;
+    box-shadow:0px 0px 10px 2px #094a68;
+  }
+  @media (max-width:300px){
+    .timeline{
+      width:100%;
+      padding:30px 5px 30px 10px;
+    }
+    .timeline ul li .content h3{
+      color:#CCC8AA;
+      font-size:15px;
+    }
+  
+  }

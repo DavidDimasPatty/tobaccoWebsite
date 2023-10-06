@@ -29,7 +29,7 @@ const Header = () => {
         <Nav className="me-auto">
         <Nav.Link href="#link" style={{"color":"white"}}>Categories</Nav.Link>
           <Nav.Link href="#link" style={{"color":"white"}}>Stores</Nav.Link>
-          <Nav.Link href="#home" style={{"color":"white"}}>About Us</Nav.Link>
+          <Nav.Link href="/aboutus" style={{"color":"white"}}>About Us</Nav.Link>
           <Nav.Link href="/product" style={{"color":"white"}}>Products</Nav.Link>
         </Nav>
         <Nav>
