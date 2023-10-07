@@ -4,7 +4,7 @@ import Footer from "../layout/footer";
 import Header from "../layout/header";
 import axios from "axios";
 import { Card, Button, Row, Carousel } from "react-bootstrap";
-import { Form, InputGroup } from "react-bootstrap";
+import { Form, InputGroup,Spinner } from "react-bootstrap";
 import Column from "react-bootstrap/Col";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaStar, FaArrowRight } from "react-icons/fa";
@@ -45,8 +45,22 @@ const DetailProduct = () => {
       });
   };
 
+  function addCokies(idx,item){
+    if(idx==undefined){
+      idx=0;
+    }
+    localStorage.setItem(`index`,Number(idx)+1);
+    localStorage.setItem(`order${Number(idx)+1}`,JSON.stringify(item));
+  }
+
   if (isLoading == true) {
-    return <div>Loading....</div>;
+    return (
+      <center>
+        <Spinner animation="border" variant="secondary" />
+        <Spinner animation="grow" variant="light" />
+        <Spinner animation="grow" variant="dark" />
+      </center>
+    );
   }
 
   return (
@@ -129,7 +143,7 @@ const DetailProduct = () => {
           </Row>
           <Row className="mt-5">
             <center>
-              <Button xs variant="dark">
+              <Button xs variant="dark" onClick={()=>{addCokies(localStorage.getItem('index'),[dataProduct[0],value])}}>
                 Add to Cart
               </Button>
             </center>

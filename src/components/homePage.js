@@ -6,8 +6,8 @@ import Carousel from "react-bootstrap/Carousel";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Column from "react-bootstrap/Col";
-import { Card, Button } from "react-bootstrap";
-import { FaStar,FaArrowRight } from "react-icons/fa";
+import { Card, Button,Spinner} from "react-bootstrap";
+import { FaStar, FaArrowRight } from "react-icons/fa";
 import stores from "../assets/store.png";
 const HomePage = () => {
   const [dataHome, setDataHome] = useState([]);
@@ -35,7 +35,13 @@ const HomePage = () => {
       });
   };
   if (isLoading) {
-    return <div className="App">Loading...</div>;
+    return (
+      <center>
+        <Spinner animation="border" variant="secondary" />
+        <Spinner animation="grow" variant="light" />
+        <Spinner animation="grow" variant="dark" />
+      </center>
+    );
   }
 
   return (
@@ -44,7 +50,9 @@ const HomePage = () => {
       <center>
         <h1 className="mt-4">Tobacco</h1>
         <h3>
-          <i><q>We provide the best quality and the best price cigars!</q></i>
+          <i>
+            <q>We provide the best quality and the best price cigars!</q>
+          </i>
         </h3>
       </center>
 
@@ -52,91 +60,95 @@ const HomePage = () => {
         <Column className="mb-4">
           <center className="mb-4">
             <h3 className="mb-5">Hot Offers!</h3>
-          
-              <Carousel data-bs-theme="dark">
-                {dataHome.map((data, index) => (
-                  <Carousel.Item interval={2000}>
+
+            <Carousel data-bs-theme="dark">
+              {dataHome.map((data, index) => (
+                <Carousel.Item interval={2000}>
                   <Row>
                     <Column>
-                    <img
-                      src={data.image[0]}
-                      alt={data.name}
-                      style={{
-                        "max-width": "500px",
-                        height: "500px",
-                        display: "flex",
-                        margin: "0 auto",
-                        "justify-content": "center",
-                      }}
-                    />
-                   <div>{data.name}</div>
+                      <img
+                        src={data.image[0]}
+                        alt={data.name}
+                        style={{
+                          "max-width": "500px",
+                          height: "500px",
+                          display: "flex",
+                          margin: "0 auto",
+                          "justify-content": "center",
+                        }}
+                      />
+                      <div>{data.name}</div>
                     </Column>
                     <Column>
-                    <div>{data.description}</div>
-                    <div className="mt-2"><h3>Price:</h3></div>
-                    <div><h2><del>${data.price+200}/pax</del> <FaArrowRight/> ${data.price}/pax</h2></div>
-                    <Button variant="dark">Buy Now</Button>
+                      <div>{data.description}</div>
+                      <div className="mt-2">
+                        <h3>Price:</h3>
+                      </div>
+                      <div>
+                        <h2>
+                          <del>${data.price + 200}/pax</del> <FaArrowRight /> $
+                          {data.price}/pax
+                        </h2>
+                      </div>
+                      <Button variant="dark">Buy Now</Button>
                     </Column>
                   </Row>
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-          
+                </Carousel.Item>
+              ))}
+            </Carousel>
           </center>
         </Column>
         <Column>
           <center className="mb-4">
-            <h2>Check out our stores!</h2>
+            <h2 id="store">Check out our stores!</h2>
             <div>We currently have 3 stores in diffent states</div>
             <h6>(Click store to see the map)</h6>
             <Row>
-            <Column>
-              <div>
-               
-                <img
-                  src={stores}
-                  style={{
-                    "max-width": "600px",
-                    height: "300px",
-                    display: "flex",
-                    margin: "0 auto",
-                    "justify-content": "center",
-                  }}
-                />
-                <h5>Montpelier, Vermont</h5>
-              </div>
-            </Column>
-            <Column>
-              <div>
-                
-                <img
-                  src={stores}
-                  style={{
-                    "max-width": "600px",
-                    height: "300px",
-                    display: "flex",
-                    margin: "0 auto",
-                    "justify-content": "center",
-                  }}
-                />
-                   <h5>Miami, Florida</h5>
-              </div>
-            </Column>
-            <Column>
-              <div>
-                <img
-                  src={stores}
-                  style={{
-                    "max-width": "600px",
-                    height: "300px",
-                    display: "flex",
-                    margin: "0 auto",
-                    "justify-content": "center",
-                  }}
-                />
-                   <h5>Las Vegas, Nevada</h5>
-              </div>
-            </Column>
+              <Column>
+                <div>
+                  <img
+                    src={stores}
+                    style={{
+                      "max-width": "600px",
+                      height: "300px",
+                      display: "flex",
+                      margin: "0 auto",
+                      "justify-content": "center",
+                    }}
+                  />
+                  <h5>Montpelier, Vermont</h5>
+                </div>
+              </Column>
+              <Column>
+                <div>
+                  <img
+                    src={stores}
+                    style={{
+                      "max-width": "600px",
+                      height: "300px",
+                      display: "flex",
+                      margin: "0 auto",
+                      "justify-content": "center",
+                    }}
+                  />
+                  <h5>Miami, Florida</h5>
+                </div>
+              </Column>
+              <Column>
+                <div>
+                  <img
+                    src={stores}
+                    style={{
+                      "max-width": "600px",
+                      height: "300px",
+                      display: "flex",
+                      margin: "0 auto",
+                      "justify-content": "center",
+                    }}
+                  />
+                  <h5>Las Vegas, Nevada</h5>
+                </div>
+              </Column>
             </Row>
           </center>
         </Column>
@@ -144,7 +156,7 @@ const HomePage = () => {
 
       <center>
         <Row>
-          <Column>
+          <Column id="category">
             <center className="mb-3">
               <h2>Categories</h2>
             </center>
@@ -259,7 +271,6 @@ const HomePage = () => {
           </center>
         </Column>
       </Row>
-
 
       <Footer />
     </div>
