@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -12,22 +12,46 @@ const Header = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  var arrTemp=[];
   const [showModal, setShowModal] = useState(false);
+  const [arrTemp, setArrTemp] = useState([]);
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
+  const tempArr = [];
+
   function setValue(ses1, qty, idx) {
     var data = JSON.parse(localStorage.getItem(`order${idx}`));
-    console.log(data);
     var dataa = data[1];
+    var harga = ses1.price;
+    var jumlah = 0;
     if (qty == "+") {
+      tempArr[idx - 1] = dataa + 1;
+      arrTemp[idx - 1] = dataa + 1;
+      jumlah = tempArr[idx - 1];
+      document.getElementById(`qty${idx - 1}`).value = dataa + 1;
       localStorage.setItem(`order${idx}`, JSON.stringify([ses1, dataa + 1]));
-      arrTemp[idx-1]=arrTemp[idx-1]+1;
     } else {
-      localStorage.setItem(`order${idx}`, JSON.stringify([ses1, dataa - 1]));
-      arrTemp[idx-1]=arrTemp[idx-1]-1;
+      if (dataa > 0) {
+        tempArr[idx - 1] = dataa - 1;
+        jumlah = tempArr[idx - 1];
+        arrTemp[idx - 1] = dataa + 1;
+        document.getElementById(`qty${idx - 1}`).value = dataa - 1;
+        localStorage.setItem(`order${idx}`, JSON.stringify([ses1, dataa - 1]));
+      }
     }
+    document.getElementById(`total${idx - 1}`).innerText = `$${harga * jumlah}`;
   }
+
+  function cancel(id) {
+    document.getElementById(`card${id}`).innerHTML = "";
+    localStorage.removeItem(`order${id + 1}`);
+  }
+
+  useEffect(() => {
+    setArrTemp((prevArr) => {
+      return [...prevArr, ...tempArr];
+    });
+  }, []);
+
   return (
     <Navbar expand="lg" bg="dark" data-bs-theme="dark" sticky="top">
       <Navbar.Brand href="/" style={{ color: "white" }} className="ms-5">
@@ -92,51 +116,77 @@ const Header = () => {
             if (idx == 0 || idx == null) {
               arr.push(<div>Nothing to checkout</div>);
             } else {
-              for (var i = 0; i < idx; i++) {
+              for (let i = 0; i < idx; i++) {
                 var data = JSON.parse(localStorage.getItem(`order${i + 1}`));
-                var dataProd = data[0];
-                var value = data[1];
-                arrTemp.push(value);
-                arr.push(
-                  <Card className="mb-3">
-                    <Card.Img src={dataProd.image[1]} />
-                    <Card.Title>{dataProd.name}</Card.Title>
-                    <Card.Text>
+                if (data != null) {
+                  var dataProd = data[0];
+                  var value = data[1];
+                  tempArr.push(value);
+                  arr.push(
+                    <Card className="mb-3" id={`card${i}`}>
                       <center>
-                        <Form.Group>
-                          <Form.Label>Quantity</Form.Label>
-                          <InputGroup style={{ width: "30%" }}>
-                            <InputGroup.Text
-                              id="inputGroupPrepend"
-                              onClick={() => {
-                                setValue(data[0], "+", Number(i)+1);
-                              }}
-                            >
-                              +
-                            </InputGroup.Text>
-                            <Form.Control
-                              type="number"
-                              min={0}
-                              defaultValue={0}
-                              value={arrTemp[i]}
-                            />
-                            <InputGroup.Text
-                              id="inputGroupPrepend"
-                              onClick={() => {
-                                setValue(data[0], "-", Number(i)+1);
-                              }}
-                            >
-                              -
-                            </InputGroup.Text>
-                          </InputGroup>
-                        </Form.Group>
-                        <h2>Total : {dataProd.price * value}</h2>
+                        <Card.Img
+                          src={dataProd.image[1]}
+                          style={{ "max-width": "100px", height: "100px" }}
+                        />
+
+                        <Card.Title>{dataProd.name}</Card.Title>
                       </center>
-                    </Card.Text>
-                  </Card>
-                );
+                      <Card.Text>
+                        <center>
+                          <Form.Group>
+                            <Form.Label>Quantity</Form.Label>
+                            <InputGroup style={{ width: "30%" }}>
+                              <InputGroup.Text
+                                id="inputGroupPrepend"
+                                onClick={() => {
+                                  setValue(data[0], "+", Number(i) + 1);
+                                }}
+                              >
+                                +
+                              </InputGroup.Text>
+                              <Form.Control
+                                id={`qty${i}`}
+                                type="number"
+                                min={0}
+                                defaultValue={0}
+                                value={value}
+                                disabled
+                              />
+                              <InputGroup.Text
+                                id="inputGroupPrepend"
+                                onClick={() => {
+                                  setValue(data[0], "-", Number(i) + 1);
+                                }}
+                              >
+                                -
+                              </InputGroup.Text>
+                            </InputGroup>
+                          </Form.Group>
+                          <h2>
+                            Total :
+                            <h2 id={`total${i}`}>${dataProd.price * value}</h2>
+                          </h2>
+                          <Button
+                            className="mb-3"
+                            variant="dark"
+                            onClick={() => {
+                              cancel(i);
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        </center>
+                      </Card.Text>
+                    </Card>
+                  );
+                }
               }
-              arr.push(<Button variant="dark">Check Out</Button>);
+              arr.push(
+                <center>
+                  <Button variant="dark">Check Out</Button>
+                </center>
+              );
             }
             return arr;
           })()}
