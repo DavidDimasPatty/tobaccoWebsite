@@ -7,21 +7,39 @@ import { FaCartPlus } from "react-icons/fa";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
-import { Card, Button, Modal, Form, InputGroup } from "react-bootstrap";
+import { Card, Button, Modal, Form, InputGroup, Toast } from "react-bootstrap";
 import { HashLink } from "react-router-hash-link";
-
 const Header = () => {
+  //modal offset variabel
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [showModal, setShowModal] = useState(false);
+  const [showModalSignUp, setShowModalSignUp] = useState(false);
+  const [showModalToast, setShowModalToast] = useState(false);
+  //offset item
   const [arrTemp, setArrTemp] = useState([]);
+  const tempArr = [];
+  //toast
+
+  //login
   const [id, setId] = useState("");
   const [nama, setNama] = useState("");
+  //signup
+  const [idSU, setIdSU] = useState("");
+  const [nameSU, setNameSU] = useState("");
+  const [passwordSU, setPasswordSU] = useState("");
   const [password, setPassword] = useState("");
+
+  //handle modal and offset
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
-  const tempArr = [];
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleCloseModalSignUp = () => setShowModalSignUp(false);
+  const handleShowModalSignUp = () => setShowModalSignUp(true);
+  const handleCloseModalToast = () => setShowModalToast(false);
+  const handleShowModalToast = () => setShowModalToast(true);
+
+  //env
   const devEnv = process.env.NODE_ENV != "production";
   const { REACT_APP_DEV_URL, REACT_APP_DEV_PRODUCTION } = process.env;
 
@@ -70,6 +88,7 @@ const Header = () => {
       )
       .then((res) => {
         localStorage.setItem("user", res.data[0].name);
+        localStorage.setItem("idUser", res.data[0]._id);
         document.getElementById("loginLink").style.display = "none";
         document.getElementById("halouser").style.display = "";
         setShowModal(false);
@@ -83,23 +102,80 @@ const Header = () => {
     ) {
       document.getElementById("loginLink").style.display = "none";
       document.getElementById("halouser").style.display = "";
-    }
-    else{
+    } else {
       document.getElementById("loginLink").style.display = "";
       document.getElementById("halouser").style.display = "none";
     }
   }
 
-  const signUp = async (name, id, password) => {
+  const signUp = async () => {
     await axios
-      .get(
+      .post(
         `${
           devEnv
             ? process.env.REACT_APP_DEV_URL
             : process.env.REACT_APP_PROD_URL
-        }/login`
+        }/addUser`,
+        {
+          data: {
+            idUser: idSU,
+            password: passwordSU,
+            name: nameSU,
+          },
+        }
       )
-      .then((res) => {});
+      .then((res) => {
+        if (res.data == "success") {
+          handleCloseModalSignUp();
+          handleShowModalToast();
+          countDown();
+        } else {
+        }
+      });
+  };
+
+  const addUserProduct = async () => {
+    var price = 0;
+    var product = [];
+    var idx = localStorage.getItem("index");
+
+    for (var i = 0; i < idx; i++) {
+      var data = JSON.parse(localStorage.getItem(`order${i + 1}`));
+      if (data != null) {
+        product.push(JSON.stringify(data));
+        price += Number(data[0].price * data[1]);
+      }
+    }
+
+    await axios
+      .post(
+        `${
+          devEnv
+            ? process.env.REACT_APP_DEV_URL
+            : process.env.REACT_APP_PROD_URL
+        }/addUserProduct`,
+        {
+          data: {
+            idUser: localStorage.getItem("idUser"),
+            product: product,
+            price: price,
+            date: Date.now(),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data)
+        if (res.data == "success") {
+          for (var i = 0; i < idx; i++) {
+            if (data != null) {
+              localStorage.removeItem(`order${i + 1}`);
+            }
+          }
+          localStorage.removeItem("index");
+          handleClose();
+        } else {
+        }
+      });
   };
 
   function logOut() {
@@ -107,6 +183,16 @@ const Header = () => {
     document.getElementById("loginLink").style.display = "";
     document.getElementById("halouser").style.display = "none";
   }
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const countDown = async () => {
+    var batas = 1;
+    for (var i = batas; i >= 0; i--) {
+      await delay(1000);
+    }
+    handleCloseModalToast();
+  };
 
   useEffect(() => {
     setArrTemp((prevArr) => {
@@ -164,16 +250,20 @@ const Header = () => {
           <NavDropdown
             className="me-4 "
             title={
-              <span   style={{ color: "white" }}>
+              <span style={{ color: "white" }}>
                 Halo, {localStorage.getItem("user")}
               </span>
             }
             id="halouser"
             style={{ color: "white" }}
           >
-            <NavDropdown.Item href="#action4">My Order</NavDropdown.Item>
+            <NavDropdown.Item href={`/myorder/${localStorage.getItem("idUser")}`}>My Order</NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item onClick={()=>{logOut()}}>
+            <NavDropdown.Item
+              onClick={() => {
+                logOut();
+              }}
+            >
               Log Out
             </NavDropdown.Item>
           </NavDropdown>
@@ -181,7 +271,7 @@ const Header = () => {
           <Nav.Item
             onClick={handleShow}
             style={{ color: "white" }}
-            className="me-5 mt-1" 
+            className="me-5 mt-1"
           >
             <FaCartPlus />
           </Nav.Item>
@@ -191,11 +281,10 @@ const Header = () => {
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Your Cart Items</Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body id="canvas">
           {(() => {
             var arr = [];
             var idx = localStorage.getItem("index");
-            console.log(idx);
             if (idx == 0 || idx == null) {
               arr.push(<div>Nothing to checkout</div>);
             } else {
@@ -267,7 +356,14 @@ const Header = () => {
               }
               arr.push(
                 <center>
-                  <Button variant="dark">Check Out</Button>
+                  <Button
+                    variant="dark"
+                    onClick={() => {
+                      addUserProduct();
+                    }}
+                  >
+                    Check Out
+                  </Button>
                 </center>
               );
             }
@@ -278,7 +374,7 @@ const Header = () => {
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -302,13 +398,76 @@ const Header = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              handleShowModalSignUp();
+              handleCloseModal();
+            }}
+          >
             Sign Up
           </Button>
           <Button variant="secondary" onClick={() => login(id, password)}>
             Log In
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal show={showModalSignUp} onHide={handleCloseModalSignUp}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign Up</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Account ID</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter ID"
+                autoFocus
+                onChange={(e) => setIdSU(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Account password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter Password"
+                onChange={(e) => setPasswordSU(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Account name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                onChange={(e) => setNameSU(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              signUp();
+            }}
+          >
+            Sign Up
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        size="sm"
+        show={showModalToast}
+        onHide={() => handleCloseModalToast()}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            <center>Succes Sign Up</center>
+          </Modal.Title>
+        </Modal.Header>
       </Modal>
     </Navbar>
   );

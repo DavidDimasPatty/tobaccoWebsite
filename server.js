@@ -22,29 +22,38 @@ app.get("/api/getAllProducts", function (req, res) {
   });
 });
 
-// app.get("/api/getProduct", function (req, res) {
-//   dbm.getProduct(req.query.id).then((result) => {
-//     res.send(result);
-//   });
-// });
+app.get("/api/getProductCategories", async function (req, res) {
+  await dbm.getProduct(req.query.id).then(async (ressdata) => {
+    var res2 = await dbm.getCategoriesProduct(ressdata[0].category);
+    res.send([ressdata, res2]);
+  });
+});
 
-app.get("/api/getProductCategories", async function (req,res) {
-    await dbm.getProduct(req.query.id).then(async (ressdata)=>{
-        var res2= await dbm.getCategoriesProduct(ressdata[0].category);
-        res.send([ressdata,res2])
-    });
-})
-
-app.get("/api/getAllProducts", function (req, res) {
-  dbm.getAllProduct().then((result) => {
+app.get("/api/getAllOrder", function (req, res) {
+  dbm.getUserProduct(req.query.id).then((result) => {
     res.send(result);
   });
 });
 
 app.post("/api/addUserProduct", function (req, res) {
-  dbm.addUserProduct(req.body, idUser, req.body.idProduct).then((result) => {
-    res.send(result);
-  });
+  dbm
+    .addUserProduct(
+      req.body.data.idUser,
+      req.body.data.product,
+      req.body.data.price,
+      req.body.data.date
+    )
+    .then((result) => {
+      res.send(result);
+    });
+});
+
+app.post("/api/addUser", function (req, res) {
+  dbm
+    .addUser(req.body.data.idUser, req.body.data.password, req.body.data.name)
+    .then((result) => {
+      res.send(result);
+    });
 });
 
 const PORT = process.env.PORT || 5000;

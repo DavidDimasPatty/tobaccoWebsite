@@ -1,5 +1,5 @@
 require("dotenv").config();
-var {ObjectId} = require('mongodb');
+var { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -28,18 +28,20 @@ const productScheme = new Schema({
   name: String,
   price: Number,
   description: String,
-  image:Array,
+  image: Array,
   datePosted: Date,
-  category: ObjectId
+  category: ObjectId,
 });
 var product = mongoose.model("product", productScheme);
 
 //product user table
 const productUserScheme = new Schema({
   idUser: ObjectId,
-  idProduct: ObjectId,
+  product: Array,
+  price: Number,
+  date: Date,
 });
-var produtUser = mongoose.model("productUser", productUserScheme);
+var productUser = mongoose.model("productUser", productUserScheme);
 
 async function getAllProduct() {
   var arr = [];
@@ -55,55 +57,105 @@ async function getAllProduct() {
   return arr;
 }
 
-async function getProduct(id){
-  var arr=[];
-  await product.find({"_id":id}).then((res)=>{
-    arr=res;
-  }).catch((e)=>{
-    console.log(e);
-  })
+async function getProduct(id) {
+  var arr = [];
+  await product
+    .find({ _id: id })
+    .then((res) => {
+      arr = res;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
   return arr;
 }
 
-async function getCategoriesProduct(id){
-  var arr=[];
-  await product.find({"category":id}).then((res)=>{
-    arr=res;
-  }).catch((e)=>{
-    console.log(e);
-  })
+async function getCategoriesProduct(id) {
+  var arr = [];
+  await product
+    .find({ category: id })
+    .then((res) => {
+      arr = res;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
   return arr;
 }
 
 async function getIdUser(id, password) {
   var arr = [];
-  await user.find({ $and: [{ idLogin: id }, { password: password }] }).then((res)=>{
-    arr=res;
-    }
-  ).catch((e)=>{
-    console.log(e);
-  });
+  await user
+    .find({ $and: [{ idLogin: id }, { password: password }] })
+    .then((res) => {
+      arr = res;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
   return arr;
 }
 
-async function addUserProduct(idUser,idProduct){
-    const newData={
-        idUser:idUser,
-        idProduct:idProduct
-    }
-    var data=new produtUser(newData);
-    data.save().then(()=>{
-        return "success"
-    }).catch(()=>{
-        return "failed"
+async function getUserProduct(id) {
+  var arr = [];
+  await productUser
+    .find({ idUser: id })
+    .then((res) => {
+      arr = res;
+    })
+    .catch((e) => {
+      console.log(e);
     });
+  return arr;
 }
 
-module.exports={
-    connect:connect,
-    getIdUser:getIdUser,
-    getAllProduct:getAllProduct,
-    addUserProduct:addUserProduct,
-    getProduct:getProduct,
-    getCategoriesProduct:getCategoriesProduct
+async function addUserProduct(idUser, product, price, date) {
+  var result = "";
+  const newData = {
+    idUser: idUser,
+    product: product,
+    price: price,
+    date: date,
+  };
+  var data = new productUser(newData);
+  await data
+    .save()
+    .then(() => {
+      result = "success";
+    })
+    .catch(() => {
+      result = "failed";
+    });
+    return result;
+  }
+
+async function addUser(idUser, password, name) {
+  var result = "";
+  const newData = {
+    idLogin: idUser,
+    password: password,
+    name: name,
+  };
+  var data = new user(newData);
+  await data
+    .save()
+    .then(() => {
+      result = "success";
+    })
+    .catch(() => {
+      result = "failed";
+    });
+  return result;
 }
+
+module.exports = {
+  connect: connect,
+  getIdUser: getIdUser,
+  getAllProduct: getAllProduct,
+  addUserProduct: addUserProduct,
+  getProduct: getProduct,
+  getCategoriesProduct: getCategoriesProduct,
+  addUser: addUser,
+  getUserProduct: getUserProduct,
+  addUserProduct: addUserProduct,
+};
