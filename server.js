@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require("dotenv").config();
 dbm.connect();
 
-app.get("/api/user", function (req, res) {
-  dbm.getIdUser(req.query.idUser, req.query.password).then((result) => {
+app.get("/api/login", function (req, res) {
+  dbm.getIdUser(req.query.id, req.query.password).then((result) => {
     res.send(result);
   });
 });

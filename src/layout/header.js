@@ -5,18 +5,25 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaCartPlus } from "react-icons/fa";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import axios from "axios";
 import Row from "react-bootstrap/Row";
 import { Card, Button, Modal, Form, InputGroup } from "react-bootstrap";
 import { HashLink } from "react-router-hash-link";
+
 const Header = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [showModal, setShowModal] = useState(false);
   const [arrTemp, setArrTemp] = useState([]);
+  const [id, setId] = useState("");
+  const [nama, setNama] = useState("");
+  const [password, setPassword] = useState("");
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
   const tempArr = [];
+  const devEnv = process.env.NODE_ENV != "production";
+  const { REACT_APP_DEV_URL, REACT_APP_DEV_PRODUCTION } = process.env;
 
   function setValue(ses1, qty, idx) {
     var data = JSON.parse(localStorage.getItem(`order${idx}`));
@@ -46,10 +53,66 @@ const Header = () => {
     localStorage.removeItem(`order${id + 1}`);
   }
 
+  const login = async (id, password) => {
+    await axios
+      .get(
+        `${
+          devEnv
+            ? process.env.REACT_APP_DEV_URL
+            : process.env.REACT_APP_PROD_URL
+        }/login`,
+        {
+          params: {
+            id: id,
+            password: password,
+          },
+        }
+      )
+      .then((res) => {
+        localStorage.setItem("user", res.data[0].name);
+        document.getElementById("loginLink").style.display = "none";
+        document.getElementById("halouser").style.display = "";
+        setShowModal(false);
+      });
+  };
+
+  function keepLogin() {
+    if (
+      localStorage.getItem("user") != null ||
+      localStorage.getItem("user") != undefined
+    ) {
+      document.getElementById("loginLink").style.display = "none";
+      document.getElementById("halouser").style.display = "";
+    }
+    else{
+      document.getElementById("loginLink").style.display = "";
+      document.getElementById("halouser").style.display = "none";
+    }
+  }
+
+  const signUp = async (name, id, password) => {
+    await axios
+      .get(
+        `${
+          devEnv
+            ? process.env.REACT_APP_DEV_URL
+            : process.env.REACT_APP_PROD_URL
+        }/login`
+      )
+      .then((res) => {});
+  };
+
+  function logOut() {
+    localStorage.removeItem("user");
+    document.getElementById("loginLink").style.display = "";
+    document.getElementById("halouser").style.display = "none";
+  }
+
   useEffect(() => {
     setArrTemp((prevArr) => {
       return [...prevArr, ...tempArr];
     });
+    keepLogin();
   }, []);
 
   return (
@@ -87,18 +150,38 @@ const Header = () => {
             Products
           </Nav.Link>
         </Nav>
+
         <Nav>
           <Nav.Item
             onClick={handleShowModal}
             style={{ color: "white" }}
-            className="me-5"
+            className="me-4 mt-1"
+            id="loginLink"
           >
             Login
           </Nav.Item>
+
+          <NavDropdown
+            className="me-4 "
+            title={
+              <span   style={{ color: "white" }}>
+                Halo, {localStorage.getItem("user")}
+              </span>
+            }
+            id="halouser"
+            style={{ color: "white" }}
+          >
+            <NavDropdown.Item href="#action4">My Order</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={()=>{logOut()}}>
+              Log Out
+            </NavDropdown.Item>
+          </NavDropdown>
+
           <Nav.Item
             onClick={handleShow}
             style={{ color: "white" }}
-            className="me-5"
+            className="me-5 mt-1" 
           >
             <FaCartPlus />
           </Nav.Item>
@@ -200,28 +283,30 @@ const Header = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>ID</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="name@example.com"
+                type="text"
+                placeholder="Enter ID"
                 autoFocus
+                onChange={(e) => setId(e.target.value)}
               />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
-            Close
+            Sign Up
           </Button>
-          <Button variant="primary" onClick={handleCloseModal}>
-            Save Changes
+          <Button variant="secondary" onClick={() => login(id, password)}>
+            Log In
           </Button>
         </Modal.Footer>
       </Modal>

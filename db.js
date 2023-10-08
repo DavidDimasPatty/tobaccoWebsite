@@ -18,7 +18,7 @@ const connect = async (e) => {
 //user table
 const userScheme = new Schema({
   name: String,
-  id: String,
+  idLogin: String,
   password: String,
 });
 var user = mongoose.model("user", userScheme);
@@ -77,9 +77,8 @@ async function getCategoriesProduct(id){
 
 async function getIdUser(id, password) {
   var arr = [];
-  await user.find({ $and: [{ _id: id }, { password: password }] }).then((res)=>{
+  await user.find({ $and: [{ idLogin: id }, { password: password }] }).then((res)=>{
     arr=res;
-    console.log(res);
     }
   ).catch((e)=>{
     console.log(e);
