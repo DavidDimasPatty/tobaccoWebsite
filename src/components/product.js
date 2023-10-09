@@ -7,6 +7,8 @@ import axios from "axios";
 import Column from "react-bootstrap/Col";
 import { Form, InputGroup,Spinner } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
+import '../assets/style/product.css'
+
 const Product = () => {
   const [dataProduct, setDataProduct] = useState([]);
   const [dataProductTemp, setDataProductTemp] = useState([]);
@@ -74,7 +76,7 @@ const Product = () => {
   return (
     <>
       <Header />
-      <center>
+      <center className="scale-up-ver-center">
         <InputGroup
           className="mt-4"
           style={{ width: "20%", "border-radius": "10px" }}
@@ -84,7 +86,7 @@ const Product = () => {
             onChange={(e) => sortArr(e.target.value)}
             placeholder="Find your product"
           />
-          <InputGroup.Text>
+          <InputGroup.Text className="scale-up-ver-center">
             <FaSearch />
           </InputGroup.Text>
         </InputGroup>
@@ -93,7 +95,7 @@ const Product = () => {
             variant="dark"
             onClick={() => {
               sortByCategories("651bc0f677b0928646c9e42b");
-            }}
+            }} 
           >
             Large Cigar
           </Button>
@@ -130,9 +132,10 @@ const Product = () => {
                     margin: "0 auto",
                     "justify-content": "center",
                   }}
+                  className="scale-up-ver-center"
                 />
                 <Card.Body>
-                  <center>
+                  <center className="scale-up-ver-center">
                     <Card.Title>{data.name}</Card.Title>
                     <Button
                       variant="dark"

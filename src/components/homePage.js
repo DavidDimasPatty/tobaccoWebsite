@@ -6,9 +6,12 @@ import Carousel from "react-bootstrap/Carousel";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Column from "react-bootstrap/Col";
-import { Card, Button,Spinner} from "react-bootstrap";
+import { Card, Button, Spinner } from "react-bootstrap";
 import { FaStar, FaArrowRight } from "react-icons/fa";
 import stores from "../assets/store.png";
+import '../assets/style/homepage.css'
+
+
 const HomePage = () => {
   const [dataHome, setDataHome] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -47,7 +50,7 @@ const HomePage = () => {
   return (
     <div>
       <Header />
-      <center>
+      <center className="scale-up-ver-center">
         <h1 className="mt-4">Tobacco</h1>
         <h3>
           <i>
@@ -56,9 +59,9 @@ const HomePage = () => {
         </h3>
       </center>
 
-      <Row className="mt-5 ms-2 mb-2">
+      <Row className="mt-5 ms-2 mb-2"  class="scale-up-ver-center">
         <Column className="mb-4">
-          <center className="mb-4">
+          <center class="scale-up-ver-center">
             <h3 className="mb-5">Hot Offers!</h3>
 
             <Carousel data-bs-theme="dark">
@@ -90,7 +93,9 @@ const HomePage = () => {
                           {data.price}/pax
                         </h2>
                       </div>
-                      <Button variant="dark">Buy Now</Button>
+                      <Button variant="dark" href={`/product/${data._id}`}>
+                        Buy Now
+                      </Button>
                     </Column>
                   </Row>
                 </Carousel.Item>
@@ -98,8 +103,8 @@ const HomePage = () => {
             </Carousel>
           </center>
         </Column>
-        <Column>
-          <center className="mb-4">
+        <Column className="mb-4">
+          <center class="scale-up-ver-center">
             <h2 id="store">Check out our stores!</h2>
             <div>We currently have 3 stores in diffent states</div>
             <h6>(Click store to see the map)</h6>
@@ -114,6 +119,12 @@ const HomePage = () => {
                       display: "flex",
                       margin: "0 auto",
                       "justify-content": "center",
+                    }}
+                    onClick={() => {
+                      window.open(
+                        "https://maps.app.goo.gl/NsaDn5oytH1hVmF89",
+                        "_blank"
+                      );
                     }}
                   />
                   <h5>Montpelier, Vermont</h5>
@@ -130,6 +141,12 @@ const HomePage = () => {
                       margin: "0 auto",
                       "justify-content": "center",
                     }}
+                    onClick={() => {
+                      window.open(
+                        "https://maps.app.goo.gl/XvvZ9ziqzxphEtoy6",
+                        "_blank"
+                      );
+                    }}
                   />
                   <h5>Miami, Florida</h5>
                 </div>
@@ -145,6 +162,12 @@ const HomePage = () => {
                       margin: "0 auto",
                       "justify-content": "center",
                     }}
+                    onClick={() => {
+                      window.open(
+                        "https://maps.app.goo.gl/P5kBLNVqZUV1Qauy8",
+                        "_blank"
+                      );
+                    }}
                   />
                   <h5>Las Vegas, Nevada</h5>
                 </div>
@@ -154,7 +177,7 @@ const HomePage = () => {
         </Column>
       </Row>
 
-      <center>
+      <center  class="scale-up-ver-center">
         <Row>
           <Column id="category">
             <center className="mb-3">
@@ -180,7 +203,9 @@ const HomePage = () => {
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
                     </Card.Text>
-                    <Button variant="dark">Check products</Button>
+                    <Button variant="dark" href="/product">
+                      Check products
+                    </Button>
                   </Card.Body>
                 </Card>
               </Column>
@@ -204,7 +229,9 @@ const HomePage = () => {
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
                     </Card.Text>
-                    <Button variant="dark">Check products</Button>
+                    <Button variant="dark" href="/product">
+                      Check products
+                    </Button>
                   </Card.Body>
                 </Card>
               </Column>
@@ -227,7 +254,9 @@ const HomePage = () => {
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
                     </Card.Text>
-                    <Button variant="dark">Check products</Button>
+                    <Button variant="dark" href="/product">
+                      Check products
+                    </Button>
                   </Card.Body>
                 </Card>
               </Column>
@@ -238,7 +267,7 @@ const HomePage = () => {
 
       <Row className="mb-4 mt-4">
         <Column>
-          <center>
+          <center  class="scale-up-ver-center">
             <h2>Words from our customers</h2>
             <Carousel data-bs-theme="dark xs">
               {(() => {

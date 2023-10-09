@@ -20,7 +20,7 @@ import image8 from "../assets/store.png";
 
 const AboutUs = () => {
   return (
-    <div>
+    <div >
       <Header />
       <Row>
         <Carousel data-bs-theme="dark">
@@ -37,19 +37,19 @@ const AboutUs = () => {
             return arr2;
           })()}
         </Carousel>
-        <center style={{ position: "absolute", "margin-top": "5%" }}>
+        <center style={{ position: "absolute", "margin-top": "5%" }} >
           <h2>About Us</h2>
         </center>
       </Row>
       <Row>
-        <center style={{ "margin-top": "-5%" }}>
+        <center style={{ "margin-top": "-5%" }} className="scale-up-ver-center">
           <h2>
             <q>Market Leading in Online Tobacco Industry</q>
           </h2>
         </center>
       </Row>
       <Row>
-        <center>
+        <center className="scale-up-ver-center">
           <h1>Our Awards</h1>
         </center>
       </Row>
@@ -67,6 +67,7 @@ const AboutUs = () => {
                   margin: "0 auto",
                   "justify-content": "center",
                 }}
+                className="scale-up-ver-center"
               />
               <Card.Body>
                 <Card.Title>Cigar Distributor</Card.Title>
@@ -89,6 +90,7 @@ const AboutUs = () => {
                   margin: "0 auto",
                   "justify-content": "center",
                 }}
+                className="scale-up-ver-center"
               />
               <Card.Body>
                 <Card.Title>Cigar Award</Card.Title>
@@ -111,6 +113,7 @@ const AboutUs = () => {
                   margin: "0 auto",
                   "justify-content": "center",
                 }}
+                className="scale-up-ver-center"
               />
               <Card.Body>
                 <Card.Title>Cigar Supplier</Card.Title>
@@ -135,7 +138,7 @@ const AboutUs = () => {
         </Column>
         <Column>
           <Row>
-            <center>
+            <center className="scale-up-ver-center">
               <h5 className="mt-5" style={{ width: "80%" }}>
                 On behalf of our entire team at Tobacco, I want to extend our
                 warmest greetings and express our heartfelt gratitude for
