@@ -106,3 +106,13 @@
                 transform: scaleY(1);
       }
     }
+
+.titleAboutUs{
+font-size:100px;
+font-weight: 100px;
+font-family: ui-sans-serif;
+}
+.underline{
+  width: 10%;
+  border-bottom: 2px solid black;
+}

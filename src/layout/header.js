@@ -9,6 +9,8 @@ import axios from "axios";
 import Row from "react-bootstrap/Row";
 import { Card, Button, Modal, Form, InputGroup, Toast } from "react-bootstrap";
 import { HashLink } from "react-router-hash-link";
+import "../assets/style/header.css";
+
 const Header = () => {
   //modal offset variabel
   const [show, setShow] = useState(false);
@@ -164,7 +166,7 @@ const Header = () => {
         }
       )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         if (res.data == "success") {
           for (var i = 0; i < idx; i++) {
             if (data != null) {
@@ -202,37 +204,43 @@ const Header = () => {
   }, []);
 
   return (
-    <Navbar expand="lg" bg="dark" data-bs-theme="dark" sticky="top">
+    <Navbar expand="lg" bg="dark" data-bs-theme="dark" sticky="top" className="allItem">
       <Navbar.Brand href="/" style={{ color: "white" }} className="ms-5">
         Tobacco
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" expand>
         <Nav className="me-auto">
-          <Nav.Link>
+          <Nav.Link className="navMenu">
             <HashLink
               smooth
               to="/#category"
               style={{ color: "white", textDecoration: "none" }}
             >
-              {" "}
-              Categories{" "}
+              Categories
             </HashLink>
           </Nav.Link>
-          <Nav.Link>
+          <Nav.Link className="navMenu">
             <HashLink
               smooth
               to="/#store"
               style={{ color: "white", textDecoration: "none" }}
             >
-              {" "}
-              Stores{" "}
+              Stores
             </HashLink>
           </Nav.Link>
-          <Nav.Link href="/aboutus" style={{ color: "white" }}>
+          <Nav.Link
+            href="/aboutus"
+            style={{ color: "white" }}
+            className="navMenu"
+          >
             About Us
           </Nav.Link>
-          <Nav.Link href="/product" style={{ color: "white" }}>
+          <Nav.Link
+            href="/product"
+            style={{ color: "white" }}
+            className="navMenu"
+          >
             Products
           </Nav.Link>
         </Nav>
@@ -257,7 +265,11 @@ const Header = () => {
             id="halouser"
             style={{ color: "white" }}
           >
-            <NavDropdown.Item href={`/myorder/${localStorage.getItem("idUser")}`}>My Order</NavDropdown.Item>
+            <NavDropdown.Item
+              href={`/myorder/${localStorage.getItem("idUser")}`}
+            >
+              My Order
+            </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item
               onClick={() => {

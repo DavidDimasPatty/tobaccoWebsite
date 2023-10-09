@@ -20,7 +20,7 @@ import image8 from "../assets/store.png";
 
 const AboutUs = () => {
   return (
-    <div >
+    <div>
       <Header />
       <Row>
         <Carousel data-bs-theme="dark">
@@ -37,8 +37,10 @@ const AboutUs = () => {
             return arr2;
           })()}
         </Carousel>
-        <center style={{ position: "absolute", "margin-top": "5%" }} >
-          <h2>About Us</h2>
+        <center style={{ position: "absolute", "margin-top": "5%" }}>
+          <h2 className="titleAboutUs">
+            About Us <hr className="underline" />
+          </h2>
         </center>
       </Row>
       <Row>
@@ -50,7 +52,9 @@ const AboutUs = () => {
       </Row>
       <Row>
         <center className="scale-up-ver-center">
-          <h1>Our Awards</h1>
+          <h1>
+            Our Awards <hr className="underline" />
+          </h1>
         </center>
       </Row>
       <center className="mt-3">
@@ -129,7 +133,9 @@ const AboutUs = () => {
       <Row className="mt-5">
         <center>
           {" "}
-          <h2 className="">Our Leader Greetings!</h2>
+          <h2 className="">
+            Our Leader Greetings! <hr className="underline" />
+          </h2>
         </center>
         <Column>
           <center>
@@ -164,7 +170,7 @@ const AboutUs = () => {
 
       <Row>
         <center>
-        <h2 className="mt-5 mb-3">Our Timeline</h2>
+          <h2 className="mt-5 mb-3">Our Timeline</h2>
           <div class="timeline">
             <ul>
               <li>
@@ -186,7 +192,7 @@ const AboutUs = () => {
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
-                  <Card style={{"background":"transparent"}}>
+                  <Card style={{ background: "transparent" }}>
                     <Card.Img src={image8} />
                   </Card>
                 </div>
@@ -199,7 +205,7 @@ const AboutUs = () => {
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
-                  <Card style={{"background":"transparent"}}>
+                  <Card style={{ background: "transparent" }}>
                     <Card.Img src={image8} />
                   </Card>
                 </div>
@@ -213,7 +219,7 @@ const AboutUs = () => {
                     typesetting industry. Lorem Ipsum has been the industry's
                     standard.
                   </p>
-                  <Card style={{"background":"transparent"}}>
+                  <Card style={{ background: "transparent" }}>
                     <Card.Img src={image8} />
                   </Card>
                 </div>
