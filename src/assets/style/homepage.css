@@ -23,3 +23,24 @@
               transform: scaleY(1);
     }
   }
+#titleHomePage{
+    font-size:50px;
+    font-weight: 100px;
+    font-family: ui-sans-serif;
+    }
+
+  .underline{
+    width: 5%;
+    border-bottom: 2px solid black;
+  }  
+
+  
+.judul{
+  font-size:36px;
+  font-weight: 50px;
+  font-family: ui-sans-serif;
+  }
+
+  .text{
+    font-family: serif;
+  }

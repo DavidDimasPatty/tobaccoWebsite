@@ -51,10 +51,10 @@ const HomePage = () => {
     <div>
       <Header />
       <center className="scale-up-ver-center">
-        <h1 className="mt-4">Tobacco</h1>
+        <h1 className="mt-4" id="titleHomePage">Tobacco <hr className="underline"/></h1>
         <h3>
           <i>
-            <q>We provide the best quality and the best price cigars!</q>
+            <q className="text">We provide the best quality and the best price cigars!</q>
           </i>
         </h3>
       </center>
@@ -62,7 +62,7 @@ const HomePage = () => {
       <Row className="mt-5 ms-2 mb-2"  class="scale-up-ver-center">
         <Column className="mb-4">
           <center class="scale-up-ver-center">
-            <h3 className="mb-5">Hot Offers!</h3>
+            <h3 className="mb-5"><div className="judul">Hot Offers!  <hr className="underline"/></div></h3>
 
             <Carousel data-bs-theme="dark">
               {dataHome.map((data, index) => (
@@ -105,7 +105,7 @@ const HomePage = () => {
         </Column>
         <Column className="mb-4">
           <center class="scale-up-ver-center">
-            <h2 id="store">Check out our stores!</h2>
+            <h2 className="judul">Check out our stores!  <hr className="underline"/></h2>
             <div>We currently have 3 stores in diffent states</div>
             <h6>(Click store to see the map)</h6>
             <Row>
@@ -181,7 +181,7 @@ const HomePage = () => {
         <Row>
           <Column id="category">
             <center className="mb-3">
-              <h2>Categories</h2>
+              <h2 className="judul">Categories  <hr className="underline"/></h2>
             </center>
             <Row className="mb-2">
               <Column>
@@ -265,10 +265,10 @@ const HomePage = () => {
         </Row>
       </center>
 
-      <Row className="mb-4 mt-4">
-        <Column>
+      <Row className="mb-4 mt-5">
+        <Column className="mb-5">
           <center  class="scale-up-ver-center">
-            <h2>Words from our customers</h2>
+            <h2 className="judul">Words from our customers  <hr className="underline"/></h2>
             <Carousel data-bs-theme="dark xs">
               {(() => {
                 var arr = [
@@ -283,7 +283,7 @@ const HomePage = () => {
                     <Carousel.Item interval={2000}>
                       <div>
                         <h3>
-                          <i>{arr[i]}</i>
+                          <i className="text">{arr[i]}</i>
                         </h3>
                         <FaStar />
                         <FaStar />
