@@ -25,9 +25,24 @@
   }
 
   .bgProduct{
-    position: absolute;
     background-image: url("../bf.png");
     background-repeat: no-repeat;
     background-position:  right -24% top -100%;
     background-size: 30%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
+
+  div{ 
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+ 
+  .bgProduct footer{
+    position:static; 
+  }
+
+ .vare {
+    flex-grow: 1;
+  }
+

@@ -63,7 +63,7 @@ const MyOrder = () => {
           for (var i = 0; i < dataProduct.length; i++) {
             arr.push(
               <center>
-              <Row className="mt-5  d-flex justify-content-center ">
+              <Row className="mt-5  d-flex justify-content-center mb-4">
                 <Card body  style={{ width: "50%" }}>
                   <div><h3>Order date :</h3> {dataProduct[i].date.substring(0,10)}</div>
 

@@ -76,7 +76,7 @@ const Product = () => {
   return (
     <div className="bgProduct">
       <Header />
-      <center className="scale-up-ver-center">
+      <center className="scale-up-ver-center vare">
         <InputGroup
           className="mt-4"
           style={{ width: "20%", "border-radius": "10px" }}
