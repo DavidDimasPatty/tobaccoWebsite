@@ -74,7 +74,7 @@ const Product = () => {
   }
 
   return (
-    <>
+    <div className="bgProduct">
       <Header />
       <center className="scale-up-ver-center">
         <InputGroup
@@ -121,7 +121,7 @@ const Product = () => {
         <Row>
           {dataProduct.map((data, index) => (
             <Column>
-              <Card style={{ width: "31rem" }} className="mt-5">
+              <Card style={{ width: "31rem" }} className="mt-5 mb-5">
                 <Card.Img
                   variant="top"
                   src={data.image[1]}
@@ -154,7 +154,7 @@ const Product = () => {
       </center>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

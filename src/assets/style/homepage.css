@@ -44,3 +44,13 @@
   .text{
     font-family: serif;
   }
+
+.bgHome {
+    position: absolute;
+    background-image: url("../bf.png"),url("../bf.png");
+    background-repeat: no-repeat;
+    background-position: right -24% top -25%,left -20% top 135%;
+    background-size: 30%;
+}
+
+img { background: transparent; }

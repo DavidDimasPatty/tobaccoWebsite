@@ -9,8 +9,7 @@ import Column from "react-bootstrap/Col";
 import { Card, Button, Spinner } from "react-bootstrap";
 import { FaStar, FaArrowRight } from "react-icons/fa";
 import stores from "../assets/store.png";
-import '../assets/style/homepage.css'
-
+import "../assets/style/homepage.css";
 
 const HomePage = () => {
   const [dataHome, setDataHome] = useState([]);
@@ -48,21 +47,35 @@ const HomePage = () => {
   }
 
   return (
-    <div>
+    <div className="bgHome">
       <Header />
       <center className="scale-up-ver-center">
-        <h1 className="mt-4" id="titleHomePage">Tobacco <hr className="underline"/></h1>
+        <h1 className="mt-4" id="titleHomePage">
+          Tobacco <hr className="underline" />
+        </h1>
         <h3>
           <i>
-            <q className="text">We provide the best quality and the best price cigars!</q>
+            <q className="text">
+              We provide the best quality and the best price cigars!
+            </q>
           </i>
         </h3>
       </center>
 
-      <Row className="mt-5 ms-2 mb-2"  class="scale-up-ver-center">
+      <Row
+        className="mt-5 ms-2 mb-2"
+        class="scale-up-ver-center"
+        style={{
+          "max-width": "100%",
+        }}
+      >
         <Column className="mb-4">
           <center class="scale-up-ver-center">
-            <h3 className="mb-5"><div className="judul">Hot Offers!  <hr className="underline"/></div></h3>
+            <h3 className="mb-5">
+              <div className="judul">
+                Hot Offers! <hr className="underline" />
+              </div>
+            </h3>
 
             <Carousel data-bs-theme="dark">
               {dataHome.map((data, index) => (
@@ -103,9 +116,17 @@ const HomePage = () => {
             </Carousel>
           </center>
         </Column>
-        <Column className="mb-4">
+        <Column
+          className="mb-4"
+          id="store"
+          style={{
+            "max-width": "100%",
+          }}
+        >
           <center class="scale-up-ver-center">
-            <h2 className="judul">Check out our stores!  <hr className="underline"/></h2>
+            <h2 className="judul">
+              Check out our stores! <hr className="underline" />
+            </h2>
             <div>We currently have 3 stores in diffent states</div>
             <h6>(Click store to see the map)</h6>
             <Row>
@@ -114,11 +135,8 @@ const HomePage = () => {
                   <img
                     src={stores}
                     style={{
-                      "max-width": "600px",
-                      height: "300px",
-                      display: "flex",
-                      margin: "0 auto",
-                      "justify-content": "center",
+                      "max-width": "100%",
+                      "max-height": "100%",
                     }}
                     onClick={() => {
                       window.open(
@@ -135,11 +153,8 @@ const HomePage = () => {
                   <img
                     src={stores}
                     style={{
-                      "max-width": "600px",
-                      height: "300px",
-                      display: "flex",
-                      margin: "0 auto",
-                      "justify-content": "center",
+                      "max-width": "100%",
+                      "max-height": "100%",
                     }}
                     onClick={() => {
                       window.open(
@@ -156,11 +171,8 @@ const HomePage = () => {
                   <img
                     src={stores}
                     style={{
-                      "max-width": "600px",
-                      height: "300px",
-                      display: "flex",
-                      margin: "0 auto",
-                      "justify-content": "center",
+                      "max-width": "100%",
+                      "max-height": "100%",
                     }}
                     onClick={() => {
                       window.open(
@@ -173,19 +185,89 @@ const HomePage = () => {
                 </div>
               </Column>
             </Row>
+            <Row className="mt-4">
+              <center>
+                <h2 className="judul">
+                  Top Seller Products
+                  <hr className="underline" />
+                </h2>
+                <Carousel data-bs-theme="dark">
+                  {(() => {
+                    var arrC = [];
+                    for (var i = 0; i < dataHome.length; i=i+3) {
+                      arrC.push(
+                        <Carousel.Item interval={2000}>
+                          <Row>
+                            <Column>
+                              <img
+                                src={dataHome[i].image[1]}
+                                alt={dataHome[i].name}
+                                style={{
+                                  "max-width": "150px",
+                                  "max-height": "150px",
+                                }}
+                              />
+                              <h6>{dataHome[i].name}</h6>
+                            </Column>
+                            {(() => {
+                              var arrC1 = [];
+                              if (i + 1 < dataHome.length) {
+                                arrC1.push(
+                                  <Column>
+                                    <img
+                                      src={dataHome[i + 1].image[1]}
+                                      style={{
+                                        "max-width": "150px",
+                                        "max-height": "150px",
+                                      }}
+                                    />
+                                    <h6>{dataHome[i + 1].name}</h6>
+                                  </Column>
+                                );
+                              }
+                              return arrC1;
+                            })()}
+                            {(() => {
+                              var arrC1 = [];
+                              if (i + 2 < dataHome.length) {
+                                arrC1.push(
+                                <Column>
+                                  <img
+                                    src={dataHome[i + 2].image[1]}
+                                    style={{
+                                      "max-width": "150px",
+                                      "max-height": "150px",
+                                    }}
+                                  />
+                                  <h6>{dataHome[i + 2].name}</h6>
+                                </Column>)
+                              }
+                              return arrC1;
+                            })()}
+                          </Row>
+                        </Carousel.Item>
+                      );
+                    }
+                    return arrC;
+                  })()}
+                </Carousel>
+              </center>
+            </Row>
           </center>
         </Column>
       </Row>
 
-      <center  class="scale-up-ver-center">
+      <center className="scale-up-ver-center me-5 ms-5">
         <Row>
           <Column id="category">
             <center className="mb-3">
-              <h2 className="judul">Categories  <hr className="underline"/></h2>
+              <h2 className="judul">
+                Categories <hr className="underline" />
+              </h2>
             </center>
             <Row className="mb-2">
               <Column>
-                <Card style={{ width: "31rem" }}>
+                <Card style={{ width: "auto" }}>
                   <Card.Img
                     variant="top"
                     src={dataHome[0].image[1]}
@@ -211,7 +293,7 @@ const HomePage = () => {
               </Column>
 
               <Column>
-                <Card style={{ width: "31rem" }}>
+                <Card style={{ width: "auto" }}>
                   <Card.Img
                     variant="top"
                     src={dataHome[3].image[2]}
@@ -236,7 +318,7 @@ const HomePage = () => {
                 </Card>
               </Column>
               <Column>
-                <Card style={{ width: "31rem" }}>
+                <Card style={{ width: "auto" }}>
                   <Card.Img
                     variant="top"
                     src={dataHome[4].image[0]}
@@ -265,10 +347,12 @@ const HomePage = () => {
         </Row>
       </center>
 
-      <Row className="mb-4 mt-5">
-        <Column className="mb-5">
-          <center  class="scale-up-ver-center">
-            <h2 className="judul">Words from our customers  <hr className="underline"/></h2>
+      <Row className="mt-5">
+        <Column>
+          <center class="scale-up-ver-center">
+            <h2 className="judul">
+              Words from our customers <hr className="underline" />
+            </h2>
             <Carousel data-bs-theme="dark xs">
               {(() => {
                 var arr = [
@@ -281,7 +365,7 @@ const HomePage = () => {
                 for (var i = 0; i < arr.length; i++) {
                   arr2.push(
                     <Carousel.Item interval={2000}>
-                      <div>
+                      <div className="mb-5">
                         <h3>
                           <i className="text">{arr[i]}</i>
                         </h3>

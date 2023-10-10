@@ -20,7 +20,7 @@ import image8 from "../assets/store.png";
 
 const AboutUs = () => {
   return (
-    <div>
+    <div className="bgAboutUs">
       <Header />
       <Row>
         <Carousel data-bs-theme="dark">
@@ -168,7 +168,7 @@ const AboutUs = () => {
         </Column>
       </Row>
 
-      <Row>
+      <Row className="mb-5">
         <center>
           <h2 className="mt-5 mb-3">Our Timeline</h2>
           <div class="timeline">

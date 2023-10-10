@@ -117,3 +117,12 @@ font-family: ui-sans-serif;
   width: 10%;
   border-bottom: 2px solid black;
 }
+
+
+.bgAboutUs {
+  position: absolute;
+  background-image: url("../bf.png"),url("../bf.png");
+  background-repeat: no-repeat;
+  background-position: left -22%  top 110%,left 122%  top 110%;
+  background-size: 30%;
+}

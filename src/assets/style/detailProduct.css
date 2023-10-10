@@ -3,3 +3,11 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
    -webkit-appearance: none;
 }
+
+.bgDetailProduct{
+   position: absolute;
+   background-image: url("../bf.png");
+   background-repeat: no-repeat;
+   background-position:  right -24% top 160%;
+   background-size: 30%;
+ }

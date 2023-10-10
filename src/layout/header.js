@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import { Card, Button, Modal, Form, InputGroup, Toast } from "react-bootstrap";
 import { HashLink } from "react-router-hash-link";
 import "../assets/style/header.css";
-
+import '../assets/style/all.css'
 const Header = () => {
   //modal offset variabel
   const [show, setShow] = useState(false);

@@ -23,3 +23,11 @@
               transform: scaleY(1);
     }
   }
+
+  .bgProduct{
+    position: absolute;
+    background-image: url("../bf.png");
+    background-repeat: no-repeat;
+    background-position:  right -24% top -100%;
+    background-size: 30%;
+  }

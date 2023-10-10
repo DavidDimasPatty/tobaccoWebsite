@@ -64,7 +64,7 @@ const DetailProduct = () => {
   }
 
   return (
-    <>
+    <div className="bgDetailProduct">
       <Header />
       <Row className="ms-3 mt-5">
         <Column>
@@ -155,7 +155,7 @@ const DetailProduct = () => {
           {" "}
           <h3>Another Products you may like:</h3>
         </Row>
-        <Row className="ms-3 mt-5">
+        <Row className="ms-3 mt-5 mb-5">
           {(() => {
             var arr = [];
             for (var i = 0; i < dataProductCategories.length; i++) {
@@ -185,7 +185,7 @@ const DetailProduct = () => {
         </Row>
       </Row>
       <Footer />
-    </>
+    </div>
   );
 };
 
