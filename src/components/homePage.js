@@ -86,17 +86,15 @@ const HomePage = () => {
                         src={data.image[0]}
                         alt={data.name}
                         style={{
-                          "max-width": "500px",
+                          "max-width": "80%",
                           height: "500px",
                           display: "flex",
-                          margin: "0 auto",
-                          "justify-content": "center",
                         }}
                       />
                       <div>{data.name}</div>
                     </Column>
                     <Column>
-                      <div>{data.description}</div>
+                      <div className="text">{data.description}</div>
                       <div className="mt-2">
                         <h3>Price:</h3>
                       </div>

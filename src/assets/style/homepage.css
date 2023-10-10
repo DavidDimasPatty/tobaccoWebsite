@@ -54,3 +54,11 @@
 }
 
 img { background: transparent; }
+
+.text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 8; /* number of lines to show */
+          line-clamp: 8; 
+  -webkit-box-orient: vertical;
+}
