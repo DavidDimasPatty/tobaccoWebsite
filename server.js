@@ -56,5 +56,19 @@ app.post("/api/addUser", function (req, res) {
     });
 });
 
+app.use(express.static(path.join(__dirname,'./build')))
+
+app.get("*",function(_,res){
+  res.sendFile(
+    path.join(__dirname,'./build/index.html'),
+    function(err) {
+      if(err){
+        res.status(500).send(err);
+      }
+    }
+  )
+})
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
