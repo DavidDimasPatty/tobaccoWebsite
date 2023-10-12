@@ -23,6 +23,9 @@ const HomePage = () => {
   const { REACT_APP_DEV_URL, REACT_APP_PROD_URL } = process.env;
 
   const getData = async () => {
+    console.log(devEnv)
+    console.log(process.env.NODE_ENV)
+    console.log(process.env.REACT_APP_PROD_URL)
     await axios
       .get(
         `${
